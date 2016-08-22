@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AkkaClustering.Core", "AkkaClustering.Core\AkkaClustering.Core.csproj", "{CC5289CD-E850-475C-9C7A-8A08DF2B78A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AkkaClustering.NonSeed", "AkkaClustering.NonSeed\AkkaClustering.NonSeed.csproj", "{4F82E1BD-734E-45A2-AAC0-756F8DDFADF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AkkaClustering.Actors", "AkkaClustering.Actors\AkkaClustering.Actors.csproj", "{41965733-8470-4F05-9E09-0D34AE536AC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AkkaClustering.Messages", "AkkaClustering.Messages\AkkaClustering.Messages.csproj", "{CFFD4624-062A-48C7-B2A9-E59FF79A6712}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC5289CD-E850-475C-9C7A-8A08DF2B78A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC5289CD-E850-475C-9C7A-8A08DF2B78A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC5289CD-E850-475C-9C7A-8A08DF2B78A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC5289CD-E850-475C-9C7A-8A08DF2B78A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F82E1BD-734E-45A2-AAC0-756F8DDFADF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F82E1BD-734E-45A2-AAC0-756F8DDFADF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F82E1BD-734E-45A2-AAC0-756F8DDFADF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F82E1BD-734E-45A2-AAC0-756F8DDFADF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41965733-8470-4F05-9E09-0D34AE536AC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41965733-8470-4F05-9E09-0D34AE536AC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41965733-8470-4F05-9E09-0D34AE536AC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41965733-8470-4F05-9E09-0D34AE536AC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFFD4624-062A-48C7-B2A9-E59FF79A6712}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFFD4624-062A-48C7-B2A9-E59FF79A6712}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFFD4624-062A-48C7-B2A9-E59FF79A6712}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFFD4624-062A-48C7-B2A9-E59FF79A6712}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

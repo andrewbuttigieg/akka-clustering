@@ -42,7 +42,7 @@ akka {
                 system
                    .Scheduler
                    .Schedule(TimeSpan.FromSeconds(0),
-                             TimeSpan.FromSeconds(5),
+                             TimeSpan.FromSeconds(15),
                              gossipActor, someMessage);
 
                 Console.ReadKey();

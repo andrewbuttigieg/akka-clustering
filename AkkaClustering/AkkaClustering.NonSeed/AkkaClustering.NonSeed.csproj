@@ -82,6 +82,16 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AkkaClustering.Actors\AkkaClustering.Actors.csproj">
+      <Project>{41965733-8470-4f05-9e09-0d34ae536ac8}</Project>
+      <Name>AkkaClustering.Actors</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AkkaClustering.Messages\AkkaClustering.Messages.csproj">
+      <Project>{cffd4624-062a-48c7-b2a9-e59ff79a6712}</Project>
+      <Name>AkkaClustering.Messages</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

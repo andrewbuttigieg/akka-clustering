@@ -1,5 +1,7 @@
 ﻿using Akka.Actor;
 using Akka.Configuration;
+using AkkaClustering.Actors;
+using AkkaClustering.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,29 +14,39 @@ namespace AkkaClustering.Core
     {
         static void Main(string[] args)
         {
-            string seedConfig = @"akka {
-    actor.provider = ""Akka.Cluster.ClusterActorRefProvider, Akka.Cluster""
+            string seedConfig = @"
+akka {
+    actor {
+        provider = ""Akka.Cluster.ClusterActorRefProvider, Akka.Cluster""
+    }
     remote {
-                helios.tcp {
-                    port = 8081
-                    hostname = localhost
-                }
-            }
-            cluster {
-                seed-nodes = [""akka.tcp://ClusterSystem@127.0.0.1:8081""]
-            }
-        }";
+        helios.tcp {
+            transport-class = ""Akka.Remote.Transport.Helios.HeliosTcpTransport, Akka.Remote""
+            applied-adapters = []
+            transport-protocol = tcp
+            port = 50003
+            hostname = localhost
+        }
+    }
+}
+";
 
             var config = ConfigurationFactory.ParseString(seedConfig);
 
             using (ActorSystem system = ActorSystem.Create("ClusterSystem", config))
             {
-                //var chatHistory = system.ActorOf<ChatHistoryActor>("chatHistory");
-                //system.ActorOf(Props.Create(() => new ChatWriterActor(chatHistory)), "chatWriter");
+                var gossipActor = system.ActorOf(Props.Create(() => new GossipActor()), "gossipActor");
+
+
+                var someMessage = new GossipMessage("This is a message.");
+                system
+                   .Scheduler
+                   .Schedule(TimeSpan.FromSeconds(0),
+                             TimeSpan.FromSeconds(5),
+                             gossipActor, someMessage);
 
                 Console.ReadKey();
             }
-
         }
     }
 }

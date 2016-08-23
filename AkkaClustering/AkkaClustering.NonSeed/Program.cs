@@ -1,10 +1,8 @@
 ﻿using Akka.Actor;
 using Akka.Configuration;
+using AkkaClustering.Actors;
+using AkkaClustering.Messages;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AkkaClustering.NonSeed
 {
@@ -12,27 +10,30 @@ namespace AkkaClustering.NonSeed
     {
         static void Main(string[] args)
         {
-            var nonSeedConfig = @"akka {
-                actor.provider = ""Akka.Cluster.ClusterActorRefProvider, Akka.Cluster""
+            var nonSeedConfig = @"
+akka {
+    actor.provider = ""Akka.Cluster.ClusterActorRefProvider, Akka.Cluster""
     remote {
-                    helios.tcp {
-                        port = 0 #let os pick random port
+        helios.tcp {
+            port = 0 #let os pick random port
             hostname = localhost
-                    }
-                }
-                cluster {
-                    seed-nodes = [""akka.tcp://ClusterSystem@127.0.0.1:8081""]
-                }
-            }";
+        }
+    }
+    cluster {
+        seed-nodes = [""akka.tcp://ClusterSystem@localhost:50003""]
+    }
+}";
 
             var config = ConfigurationFactory.ParseString(nonSeedConfig);
 
             using (ActorSystem system = ActorSystem.Create("ClusterSystem", config))
             {
-                //var chatHistory = system.ActorOf<ChatHistoryActor>("chatHistory");
-                //system.ActorOf(Props.Create(() => new ChatWriterActor(chatHistory)), "chatWriter");
+                var gossipActor = system.ActorOf<GossipActor>("gossipActor");
+                var printActor = system.ActorOf(Props.Create(() => new PrintActor()), "printActor");
 
-                Console.ReadKey();
+                gossipActor.Tell(new GossipSubMessage(printActor));
+
+                Console.ReadLine();
             }
         }
     }

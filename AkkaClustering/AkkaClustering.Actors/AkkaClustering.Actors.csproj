@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RoomActor.cs" />
     <Compile Include="GossipActor.cs" />
     <Compile Include="PrintActor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -50,16 +50,19 @@ akka {
             using (ActorSystem system = ActorSystem.Create("ClusterSystem", config))
             {
                 var gossipActor = system.ActorOf(Props.Create(() => new GossipActor()), "gossipActor");
+                var roomActor = system.ActorOf(Props.Create(() => new RoomActor()), "roomActor");
+                var printActor = system.ActorOf(Props.Create(() => new PrintActor()), "printActor");
 
+                gossipActor.Tell(new GossipSubMessage(printActor));
 
-                var someMessage = new GossipMessage("This is a message.");
+                var someMessage = new GossipMessage("This is a message from the seed.");
                 system
                    .Scheduler
-                   .Schedule(TimeSpan.FromSeconds(0),
-                             TimeSpan.FromSeconds(15),
-                             gossipActor, someMessage);
+                   .ScheduleTellRepeatedly(TimeSpan.FromSeconds(0),
+                             TimeSpan.FromSeconds(5),
+                             gossipActor, someMessage, roomActor);
 
-                Console.ReadKey();
+                Console.ReadLine();
             }
         }
     }

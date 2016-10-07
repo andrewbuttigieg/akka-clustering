@@ -43,9 +43,19 @@ akka {
             {
                 //var gossipActor = system.ActorOf(Props.Create(() => new GossipActor()), "gossipActor");
                 var gossipActor = system.ActorSelection("akka.tcp://ClusterSystem@localhost:50003/user/gossipActor");
+                var roomActor = system.ActorSelection("akka.tcp://ClusterSystem@localhost:50003/user/roomActor");
+                //var roomActor = system.ActorOf(Props.Create(() => new RoomActor()), "roomActor");
                 var printActor = system.ActorOf(Props.Create(() => new PrintActor()), "printActor");
 
                 gossipActor.Tell(new GossipSubMessage(printActor));
+
+                var someMessage = new GossipMessage("This is a message from the non seed.");
+                system
+                   .Scheduler
+                   .ScheduleTellRepeatedly(TimeSpan.FromSeconds(3),
+                             TimeSpan.FromSeconds(5),
+                             gossipActor, someMessage, roomActor.Anchor);
+                
 
                 Console.ReadLine();
             }

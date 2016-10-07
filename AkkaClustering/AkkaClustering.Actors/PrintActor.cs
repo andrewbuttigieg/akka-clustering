@@ -14,7 +14,7 @@ namespace AkkaClustering.Actors
         {
             Receive<GossipMessage>(msg =>
             {
-                Console.WriteLine(msg.Message);
+                Console.WriteLine("[" + DateTime.Now + "] " + msg.Message);
             });
         }
     }

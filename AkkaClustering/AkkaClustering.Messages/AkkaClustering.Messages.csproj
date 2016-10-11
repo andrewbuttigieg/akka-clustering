@@ -52,9 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GossipMessage.cs" />
-    <Compile Include="GossipUnSubMessage.cs" />
-    <Compile Include="GossipSubMessage.cs" />
+    <Compile Include="ClusterMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

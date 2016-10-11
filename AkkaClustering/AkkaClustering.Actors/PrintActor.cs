@@ -12,7 +12,7 @@ namespace AkkaClustering.Actors
     {
         public PrintActor()
         {
-            Receive<GossipMessage>(msg =>
+            Receive<ClusterMessage>(msg =>
             {
                 Console.WriteLine("[" + DateTime.Now + "] " + msg.Message);
             });

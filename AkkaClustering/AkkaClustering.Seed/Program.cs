@@ -1,5 +1,6 @@
 ﻿using Akka.Actor;
 using Akka.Configuration;
+using Akka.Routing;
 using AkkaClustering.Actors;
 using AkkaClustering.Messages;
 using System;
@@ -14,12 +15,23 @@ namespace AkkaClustering.Core
     {
         static void Main(string[] args)
         {
-            string seedConfig = @"
+            var seedConfig = @"
 akka {
     actor {
         provider = ""Akka.Cluster.ClusterActorRefProvider, Akka.Cluster""
+        deployment {
+            /talker {
+                router = broadcast-group
+                routees.paths = [""/user/printActor""]
+                nr-of-instances = 3
+                cluster {
+			        enabled = on
+					allow-local-routees = on
+					use-role = tracker
+	            }
+            }
+        }
     }
-
     remote {
         helios.tcp {
             transport-class = ""Akka.Remote.Transport.Helios.HeliosTcpTransport, Akka.Remote""
@@ -29,39 +41,27 @@ akka {
             hostname = localhost
         }
     }
-    deployment {
-        /user/gossipActor {
-	        cluster {
-			        enabled = on
-			        max-nr-of-instances-per-node = 1
-			        allow-local-routees = on
-			        use-role = tracker
-	        }
-        }
-    }
     cluster {
-        seed-nodes = [""akka.tcp://ClusterSystem@localhost:50003""]
+        seed-nodes = [""akka.tcp://clusterSystem@localhost:50003""]
+        roles = [""tracker""]
     }
-}
-";
+}";
 
             var config = ConfigurationFactory.ParseString(seedConfig);
 
-            using (ActorSystem system = ActorSystem.Create("ClusterSystem", config))
+            using (ActorSystem system = ActorSystem.Create("clusterSystem", config))
             {
-                var gossipActor = system.ActorOf(Props.Create(() => new GossipActor()), "gossipActor");
-                var roomActor = system.ActorOf(Props.Create(() => new RoomActor()), "roomActor");
                 var printActor = system.ActorOf(Props.Create(() => new PrintActor()), "printActor");
 
-                gossipActor.Tell(new GossipSubMessage(printActor));
+                var router = system.ActorOf(Props.Empty.WithRouter(FromConfig.Instance), "talker");
+                var someMessage = new ClusterMessage("This is a message from the seed.");
 
-                var someMessage = new GossipMessage("This is a message from the seed.");
                 system
                    .Scheduler
                    .ScheduleTellRepeatedly(TimeSpan.FromSeconds(0),
                              TimeSpan.FromSeconds(5),
-                             gossipActor, someMessage, roomActor);
-
+                             router, someMessage, ActorRefs.NoSender);
+                
                 Console.ReadLine();
             }
         }

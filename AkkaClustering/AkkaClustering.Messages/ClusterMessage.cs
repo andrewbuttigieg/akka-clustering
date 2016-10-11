@@ -2,11 +2,11 @@
 
 namespace AkkaClustering.Messages
 {
-    public class GossipMessage
+    public class ClusterMessage
     {
         public string Message { get; private set; }
 
-        public GossipMessage(string message)
+        public ClusterMessage(string message)
         {
             this.Message = message;
         }
